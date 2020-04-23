@@ -36,7 +36,7 @@ app.get("/word", async (req, res) => {
     ],
 });
 
-
+    //'Content-Type': 'application/octet-stream',
   const b64string = await Packer.toBase64String(doc)
   console.log(b64string)
 
@@ -44,7 +44,7 @@ app.get("/word", async (req, res) => {
   //res.send(Buffer.from(b64string, "base64"))
   var doc64 = Buffer.from(b64string, "base64");
     res.writeHead(200, {
-    'Content-Type': 'application/octet-stream',
+    'Content-Type': 'application/msword',
     'Content-Length': doc64.length
   });
   res.end(doc64);
