@@ -44,7 +44,7 @@ app.get("/word", async (req, res) => {
   //res.send(Buffer.from(b64string, "base64"))
   var doc64 = Buffer.from(b64string, "base64");
     res.writeHead(200, {
-    'Content-Type': 'application/msword',
+    'Content-Type': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
     'Content-Length': doc64.length
   });
   res.end(doc64);
