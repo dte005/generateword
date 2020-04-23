@@ -12,7 +12,7 @@ app.get('/', (req, res) => {
   res.send('Hello World!')
 });
 app.listen(process.env.PORT || 8000);
-app.get("/word", (req, res) => {
+app.get("/word", async (req, res) => {
 
   console.log("executing....");
   const doc = new Document();
@@ -36,23 +36,13 @@ app.get("/word", (req, res) => {
     ],
 });
 
-  //  const b64string = Packer.toBase64String(doc);
-  //  console.log(b64string)
-  //  res.setHeader('Content-Disposition', 'attachment; filename=My Document.docx');
-  //  res.send(Buffer.from(b64string, 'base64'));
-  // Used to export the file into a .docx file
-  const b64string = Packer.toBase64String(doc)
-  .then(function(result){
-    return result;
-  });
-  //Packer.toBuffer(doc).then((buffer) => {
-  //fs.writeFileSync("My Document.docx", buffer);
-  //});
-  //res.send(Buffer.from(b64string, 'base64'));
 
+  const b64string = await Packer.toBase64String(doc)
+  console.log(b64string)
 
   res.setHeader('Content-Disposition', 'attachment; filename=My Document.docx');
-  var doc64 = Buffer.from('base64',b64string,);
+  //res.send(Buffer.from(b64string, "base64"))
+  var doc64 = Buffer.from(b64string, "base64");
     res.writeHead(200, {
     'Content-Type': 'application/octet-stream',
     'Content-Length': doc64.length
@@ -60,7 +50,5 @@ app.get("/word", (req, res) => {
   res.end(doc64);
 
   console.log('escreveu base 64');
-  //var files = fs.createReadStream("My Document.docx");
-  //res.writeHead(200, {'Content-disposition': 'attachment; filename=My Document.docx'}); //here you can add more headers
-  //files.pipe(res)
+
 });
